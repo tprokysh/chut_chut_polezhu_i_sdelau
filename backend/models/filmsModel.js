@@ -1,13 +1,11 @@
-const path = require("path");
 const client = require("../db");
 
 class Films {
   static async getFilms() {
     try {
       const query =
-        "SELECT fl.id, fl.title, fl.year, fr.format, fl.authors FROM films fl JOIN formats fr ON fl.formatId = fr.id";
+        "SELECT fl.id, fl.title, fl.year, fr.format, fl.authors FROM films fl JOIN formats fr ON fl.formatId = fr.id ORDER BY id DESC";
       const results = await client.query(query);
-      console.log(results.rows);
 
       return results.rows;
     } catch (err) {
@@ -25,19 +23,17 @@ class Films {
         `${data.formatId}`,
         `${data.authors}`
       ];
-
       await client.query(query, values);
     } catch (err) {
-      console.log("ADDFILM", err);
+      return;
     }
   }
 
   static async deleteFilm(id) {
     try {
-      console.log(id.split());
-
       const query = "DELETE FROM films WHERE id = $1";
       await client.query(query, id.split());
+
       return 1;
     } catch (err) {
       console.log(err);
@@ -46,12 +42,9 @@ class Films {
 
   static async getFilmInfo(idx) {
     try {
-      console.log(idx);
-
       const query =
         "SELECT fl.id, fl.title, fl.year, fr.format, fl.authors FROM films fl JOIN formats fr ON fl.formatId = fr.id WHERE fl.id = $1";
       const result = await client.query(query, idx.split());
-      console.log(result.rows);
 
       return result.rows[0];
     } catch (err) {
