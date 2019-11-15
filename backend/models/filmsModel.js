@@ -5,8 +5,10 @@ class Films {
   static async getFilms() {
     try {
       const query =
-        "SELECT fl.id, fl.title, fl.year, fr.format, fl.authors FROM films fl JOIN formats fr ON fl.formatId = fr.id ORDER BY title DESC";
+        "SELECT fl.id, fl.title, fl.year, fr.format, fl.authors FROM films fl JOIN formats fr ON fl.formatId = fr.id";
       const results = await client.query(query);
+      console.log(results.rows);
+
       return results.rows;
     } catch (err) {
       console.log(err);
@@ -36,6 +38,7 @@ class Films {
 
       const query = "DELETE FROM films WHERE id = $1";
       await client.query(query, id.split());
+      return 1;
     } catch (err) {
       console.log(err);
     }
@@ -50,7 +53,7 @@ class Films {
       const result = await client.query(query, idx.split());
       console.log(result.rows);
 
-      return result.rows;
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
