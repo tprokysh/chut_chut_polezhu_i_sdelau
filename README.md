@@ -1,16 +1,25 @@
 # chut_chut_polezhu_i_sdelau
 
 nu, poehali
+# git clone
 <pre>
 1. git clone https://github.com/tprokysh/chut_chut_polezhu_i_sdelau.git && cd chut_chut_polezhu_i_sdelau && cd backend
 </pre>
-1.1 Exec commands from createDB.sql <br />
-1.2 Config db.js file with your settings.
+# create database
+1.1. Exec commands from createDB.sql <br />
+1.2. Config db.js file with your settings.
+# start server
 <pre>
 2. npm i && node index.js
 </pre>
+# run client
 3. go to new terminal
 <pre>
-3.1 cd chut_chut_polezhu_i_sdelau && cd frontend && npm i && npm start
+3.1. cd chut_chut_polezhu_i_sdelau && cd frontend && npm i && npm start
 </pre>
-3.2 enjoy <br />
+3.3. go to localhost:3000 and touch it <br />
+# run test
+<pre>
+4. cd chut_chut_polezhu_i_sdelau && cd frontend && npm start test
+</pre>
+5. thank you <3 <br />
