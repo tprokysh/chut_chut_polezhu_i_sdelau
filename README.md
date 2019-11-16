@@ -5,10 +5,10 @@ nu, poehali
 <pre>
 backend/
   models/ - all database logic
-  public/ - static folder for lodaded file
+  public/ - static folder for loaded file
   routes/ - api
   tests/ - tests, obviously
-  utils/ - other cool functions, such ass txt parser or setup multer
+  utils/ - other cool functions, such as txt parser or setup multer
   createDB.sql - sql-language command for create database
   db.js - config and setup database
   index.js - app entry point
