@@ -19,7 +19,6 @@ class SearchTitle extends React.Component {
         let films = [...data.films];
 
         const filteredData = this.findByTitle(this.state.searchTitle, films);
-        console.log(filteredData);
 
         films = filteredData;
 

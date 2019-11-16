@@ -30,6 +30,7 @@ class Filter extends React.Component {
       <div className="filter">
         {!isSortered ? (
           <button
+            disabled={this.props.films.length > 1 ? false : true}
             onClick={() => {
               this.setState({ isSortered: true });
               this.getFilms();
@@ -39,6 +40,7 @@ class Filter extends React.Component {
           </button>
         ) : (
           <button
+            disabled={this.props.films.length > 1 ? false : true}
             onClick={() => {
               this.setState({ isSortered: false });
               this.getFilms();

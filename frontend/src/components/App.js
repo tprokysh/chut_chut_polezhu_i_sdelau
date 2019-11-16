@@ -65,7 +65,7 @@ class App extends React.Component {
           updateFilms={this.updateFilms}
           updateIsOne={this.updateIsOne}
         />
-        <Filter updateFilms={this.updateFilms} />
+        <Filter updateFilms={this.updateFilms} films={this.state.films} />
         <Films
           films={this.state.films}
           deleteFilm={this.deleteFilm}
