@@ -43,6 +43,6 @@ frontend/
 3.3. go to localhost:3000 and touch it <br />
 # run test
 <pre>
-4. cd chut_chut_polezhu_i_sdelau && cd frontend && npm start test
+4. cd chut_chut_polezhu_i_sdelau && cd frontend && npm run test
 </pre>
 5. thank you <3 <br />
