@@ -24,6 +24,7 @@ class AddForm extends React.Component {
   };
 
   handleFilmAdd = () => {
+    let { film } = this.state;
     const newFilm = {
       title: this.state.film.title,
       year: this.state.film.year,
@@ -42,7 +43,46 @@ class AddForm extends React.Component {
         formatId: newFilm.formatId,
         authors: newFilm.authors
       })
-    }).then(this.getFilms);
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert("Seems like the film already in base!");
+        }
+        this.getFilms();
+      });
+
+    this.setState({
+      film: { ...film, title: "", year: "", formatId: 0, authors: "" }
+    });
+  };
+
+  yearValidation = (e) => {
+    let { film } = this.state;
+    let value = e.target.validity.valid ? e.target.value : this.state.film.year;
+
+    this.setState({ film: { ...film, year: value } });
+  };
+
+  actorsValidation = (e) => {
+    let { film } = this.state;
+    let value = e.target.validity.valid
+      ? e.target.value
+      : this.state.film.authors;
+
+    this.setState({ film: { ...film, authors: value } });
+  };
+
+  checkYear = (films) => {
+    const { film } = this.state;
+    const value = +film.year;
+
+    if (!value) return;
+
+    if (value < 1850 || value > 2025) {
+      alert("Please enter the year from 1850 to 2025");
+      this.setState({ film: { ...film, year: "" } });
+    }
   };
 
   render() {
@@ -62,14 +102,13 @@ class AddForm extends React.Component {
         <br />
         <br />
         <input
-          type="number"
+          type="text"
+          pattern="[0-9]*"
           className="addFilmForm_year"
-          placeholder="Enter the year"
-          min="0"
+          placeholder="Enter the year(1850-2025)"
+          onChange={this.yearValidation.bind(this)}
+          onBlur={this.checkYear.bind(this)}
           value={this.state.film.year}
-          onChange={(e) => {
-            this.setState({ film: { ...film, year: e.target.value } });
-          }}
         />
         <br />
         <br />
@@ -92,11 +131,10 @@ class AddForm extends React.Component {
         <input
           type="text"
           className="addFilmForm_authors"
-          placeholder="Enter the author(s)"
+          pattern="[A-Za-zА-Яа-я]*"
+          placeholder="Enter the actor(s)"
           value={this.state.film.authors}
-          onChange={(e) => {
-            this.setState({ film: { ...film, authors: e.target.value } });
-          }}
+          onChange={this.actorsValidation.bind(this)}
         />
         <br />
         <br />

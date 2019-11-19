@@ -15,7 +15,17 @@ class Films {
 
   static async addFilm(data) {
     try {
+      let status = true;
       if (data.formatId < 1 || data.formatId > 3) return "error";
+      const getQuery = "SELECT title FROM films";
+
+      const getResults = await client.query(getQuery);
+
+      getResults.rows.forEach((item) => {
+        if (data.title === item.title) status = false;
+      });
+
+      if (!status) return "error";
 
       const query =
         "INSERT INTO films(title, year, formatId, authors) VALUES($1, $2, $3, $4)";

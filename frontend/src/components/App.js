@@ -38,9 +38,14 @@ class App extends React.Component {
   };
 
   deleteFilm = (id) => {
-    fetch("http://localhost:4000/films/delete/" + id, {
-      method: "DELETE"
-    }).then(this.getFilms);
+    const status = window.confirm(
+      "Are you sure you want to delete this beautiful film?"
+    );
+    if (status) {
+      fetch("http://localhost:4000/films/delete/" + id, {
+        method: "DELETE"
+      }).then(this.getFilms);
+    }
   };
 
   getFilms = () => {
@@ -48,6 +53,7 @@ class App extends React.Component {
       .then((res) => res.json())
       .then((data) => {
         let films = [...data.films];
+
         this.setState({ films: films, isOne: false });
       });
   };

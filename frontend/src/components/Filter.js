@@ -7,9 +7,9 @@ class Filter extends React.Component {
 
   sort = (films) => {
     return films.sort((firstFilm, secondFilm) => {
-      if (firstFilm.title > secondFilm.title) return 1;
-      else if (firstFilm.title < secondFilm.title) return -1;
-      else return 0;
+      return firstFilm.title
+        .toLowerCase()
+        .localeCompare(secondFilm.title.toLowerCase());
     });
   };
 

@@ -12,6 +12,15 @@ class searchActors extends React.Component {
     return filteredData;
   }
 
+  actorsValidation = (e) => {
+    let { film } = this.state;
+    let value = e.target.validity.valid
+      ? e.target.value
+      : this.state.searchActors;
+
+    this.setState({ searchActors: value });
+  };
+
   getFilms = () => {
     fetch("http://localhost:4000/films/get")
       .then((res) => res.json())
@@ -19,7 +28,6 @@ class searchActors extends React.Component {
         let films = [...data.films];
 
         const filteredData = this.findByActors(this.state.searchActors, films);
-        console.log(filteredData);
 
         films = filteredData;
 
@@ -36,9 +44,8 @@ class searchActors extends React.Component {
         <h1>Search by Actors</h1>
         <input
           type="text"
-          onChange={(e) => {
-            this.setState({ searchActors: e.target.value });
-          }}
+          pattern="[A-Za-zА-Яа-я]*"
+          onChange={this.actorsValidation.bind(this)}
           value={this.state.searchActors}
         />
         <button onClick={this.getFilms}>Search</button>

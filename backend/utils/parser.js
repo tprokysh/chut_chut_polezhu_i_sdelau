@@ -18,13 +18,23 @@ parseTxt = (data) => {
     if (obj.formatId === "VHS") obj.formatId = 1;
     else if (obj.formatId === "DVD") obj.formatId = 2;
     else if (obj.formatId === "Blu-Ray") obj.formatId = 3;
+    else return;
     obj.authors = item.split("\n")[3];
     if (!obj.authors) return;
     obj.authors = obj.authors.split(": ")[1];
     dist.push(obj);
   });
 
-  return dist;
+  const uniqueDist = dist.filter((item, index) => {
+    return (
+      index ===
+      dist.findIndex((obj) => {
+        return JSON.stringify(obj.title) === JSON.stringify(item.title);
+      })
+    );
+  });
+
+  return uniqueDist;
 };
 
 module.exports = parseTxt;

@@ -43,15 +43,18 @@ router.post("/films/upload", async (req, res) => {
         path.join(__dirname, "..", "public", "files", req.body.filename) +
         ".txt";
 
-      fse.readFile(pathToFile, (err, data) => {
+      fse.readFile(pathToFile, async (err, data) => {
         if (err) throw err;
-
-        if (!data) return;
 
         const dist = parseTxt(data);
 
-        dist.forEach((item) => {
-          Films.addFilm(item);
+        if (!dist.length) {
+          console.log("Server prosto otpal ot takogo faila, vybachaite");
+          process.exit(1);
+        }
+
+        await dist.forEach(async (item, index, object) => {
+          const res = await Films.addFilm(item);
         });
 
         res.status(200).json({ files: dist });
