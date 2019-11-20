@@ -16,7 +16,22 @@ class Films {
   static async addFilm(data) {
     try {
       let status = true;
-      if (data.formatId < 1 || data.formatId > 3) return "error";
+
+      if (
+        +data.formatId < 1 ||
+        +data.formatId > 3 ||
+        !data.title ||
+        !data.year ||
+        !data.formatId ||
+        !data.authors ||
+        data.title.length > 128 ||
+        data.authors.length > 255 ||
+        +data.year < 1850 ||
+        +data.year > 2025 ||
+        /[0-9]/.test(data.authors)
+      )
+        return "error";
+
       const getQuery = "SELECT title FROM films";
 
       const getResults = await client.query(getQuery);
@@ -35,7 +50,9 @@ class Films {
         `${data.formatId}`,
         `${data.authors}`
       ];
+
       await client.query(query, values);
+
       return "success";
     } catch (err) {
       console.log(err);
