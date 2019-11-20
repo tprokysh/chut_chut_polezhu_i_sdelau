@@ -13,7 +13,6 @@ class searchActors extends React.Component {
   }
 
   actorsValidation = (e) => {
-    let { film } = this.state;
     let value = e.target.validity.valid
       ? e.target.value
       : this.state.searchActors;
