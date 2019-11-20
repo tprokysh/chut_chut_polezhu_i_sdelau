@@ -39,22 +39,40 @@ router.post("/films/upload", async (req, res) => {
     upload(req, res, async (err) => {
       if (err) return;
 
-      const pathToFile =
-        path.join(__dirname, "..", "public", "files", req.body.filename) +
-        ".txt";
+      const pathToFile = path.join(
+        __dirname,
+        "..",
+        "public",
+        "files",
+        req.file.filename
+      );
+
+      if (req.file.filename !== "films.txt") {
+        fse.unlink(pathToFile, (err) => {
+          if (err) throw err;
+        });
+
+        res.status(404).json({ error: "wrong file" });
+
+        return;
+      }
 
       fse.readFile(pathToFile, async (err, data) => {
-        if (err) throw err;
+        if (err) res.status(404).json({ error: "wrong file" });
 
+        try {
+          const dist = parseTxt(data);
+        } catch {
+          return;
+        }
         const dist = parseTxt(data);
 
         if (!dist.length) {
-          console.log("Server prosto otpal ot takogo faila, vybachaite");
-          process.exit(1);
+          res.status(404).json({ error: "wrong file" });
         }
 
         await dist.forEach(async (item, index, object) => {
-          const res = await Films.addFilm(item);
+          await Films.addFilm(item);
         });
 
         res.status(200).json({ files: dist });
@@ -65,8 +83,8 @@ router.post("/films/upload", async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
     res.status(404).json({ error: "wrong file" });
+  } finally {
   }
 });
 

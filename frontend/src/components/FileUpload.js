@@ -25,7 +25,15 @@ class FileUpload extends React.Component {
     fetch("http://localhost:4000/films/upload", {
       method: "POST",
       body: formData
-    }).then(this.getFilms);
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.error) {
+          alert("Sorry, wrong file!");
+        } else {
+          this.getFilms();
+        }
+      });
   }
 
   onChange(e) {
