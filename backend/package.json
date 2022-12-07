@@ -4,9 +4,9 @@
   "description": "chut_chut_polezu_i_sdelau",
   "main": "index.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.1",
     "chai": "^4.2.0",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "fs-extra": "^8.1.0",
     "mocha": "^6.2.2",
     "mockery": "^2.1.0",
